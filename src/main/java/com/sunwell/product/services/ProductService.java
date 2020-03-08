@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.sunwell.product.model.Item;
 import com.sunwell.product.model.ItemCategory;
@@ -19,10 +20,15 @@ import com.sunwell.product.model.SellPriceLevel;
 import com.sunwell.product.utils.Filters;
 
 
+@PreAuthorize("isFullyAuthenticated()")
 public interface ProductService
 {
+	@PreAuthorize("hasAuthority('READ_ITEM')")
 	public Item findItem(@NotNull(message="{error_no_id}") Integer _id) ;
+	
+	@PreAuthorize("#oauth2.hasScope('READ_ITEM')")
 	public Item findItemByName(String _name) ;
+	
 	public Page<Item> findAllItems(Pageable _page) ;
 	public Page<Item> findItems(Filters _f, Pageable _page) throws Exception ;
 	public Page<Item> findByCategory(ItemCategory _ic, Pageable _page) ;

@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -42,6 +43,7 @@ import com.sunwell.product.utils.StandardConstant;
 @Service
 @Transactional
 @Validated
+@PreAuthorize("isFullyAuthenticated()") 
 public class ProductSvc implements ProductService
 {	
 	@Autowired
@@ -130,10 +132,12 @@ public class ProductSvc implements ProductService
 	
 //	public ProductSvc()
 	
+	@PreAuthorize("hasAuthority('READ_ITEM')")
 	public Item findItem(@NotNull(message="{error_no_id}") Integer _id) {
 		return itemRepo.findById(_id).orElse(null);
 	}
 	
+	@PreAuthorize("#oauth2.hasScope('READ_ITEM')")
 	public Item findItemByName(String _name) {
 		return itemRepo.findByName(_name);
 	}

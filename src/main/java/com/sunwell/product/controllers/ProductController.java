@@ -13,6 +13,7 @@ package com.sunwell.product.controllers;
 
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -50,6 +51,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sunwell.product.annotation.Example;
 import com.sunwell.product.dto.ItemCategoryDTO;
 import com.sunwell.product.dto.ItemDTO;
 import com.sunwell.product.dto.MerkDTO;
@@ -71,7 +73,6 @@ public class ProductController
 	@Autowired
 	ProductService productService;
 	
-    
 	@Autowired
     ServiceUtil svcUtil;
     
@@ -82,7 +83,11 @@ public class ProductController
     MessageSource messageSource;
     
     @Autowired
-    HttpServletRequest request;
+    HttpServletRequest request;  
+    
+    @Autowired
+    TestBean testBean;
+    
     
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     
@@ -142,6 +147,7 @@ public class ProductController
 		catch(Exception e) {
 			retData = svcUtil.handleException(e);
 		}
+    	logger.info("getCategories from ProductController is returning");
         return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
     }
     
@@ -393,9 +399,23 @@ public class ProductController
         return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
     }
     
+    @RequestMapping(value = "resources/test", method = RequestMethod.GET,
+			produces = "application/json"
+	)
+    public void test(
+    		@RequestHeader(value="Authorization", required = false) String _auth,
+			@RequestParam(value="systemId", required = false) Integer _systemId,
+			@RequestParam(value="name", required = false) String _name,
+			@RequestParam(value="categoryId", required = false) Integer _categoryId,
+			Pageable _page ) throws Exception {
+    	testBean.testMethod();
+//    	return null;
+    }
+    
     @RequestMapping(value = "resources/items", method = RequestMethod.GET,
 			produces = "application/json"
 	)
+    @Example(msg="message")
     public ResponseEntity<Map<String,Object>> getItems(
     		@RequestHeader(value="Authorization", required = false) String _auth,
 			@RequestParam(value="systemId", required = false) Integer _systemId,
@@ -404,6 +424,7 @@ public class ProductController
 			Pageable _page ) throws Exception 
     {
 		Map<String,Object> retData = null;
+		testBean.testMethod();
         try {
         	
 			Object mainData = null;
