@@ -11,8 +11,7 @@ package com.sunwell.product.model;
 
 import java.io.Serializable;
 
-import java.sql.*;
-import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,15 +22,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-/**
- * Satuan (metrics) yg digunakan utk stok bahan dan stok barang.
- *
- * @author Irfin A.
- *
- * @version 1.0 - February 8, 2007 ; initial version.
- * @version 1.3 - January 19, 2010 ; penambahan method returnAllFromDB().
- * @version 1.5 - December 15, 2014 ; adaptasi dengan fitur jpa.
- */
 @Entity
 @Table(name="metrics")
 @NamedQueries ({
@@ -73,29 +63,6 @@ public class Metrics implements Serializable
         return name;
     }
 
-//    @Deprecated
-//    public Metrics(String _name, double _units, Metrics _metricRinci) {
-//        setNamaMetric(_name);
-//        setUnits(_units);
-//        setMetricRinci(_metricRinci);
-//
-//        memo = null;
-//    }
-
-//    @Deprecated
-//    public Metrics getMetricRinci() {
-//        if (m_metricRinci == null) {
-//            return null;
-//        } else {
-//            try {
-//                m_metricRinci = this.queryByName(m_metricRinci.getNamaMetric());
-//            } catch (SQLException x) {
-//                return null;
-//            }
-//        }
-//
-//        return m_metricRinci;
-//    }
     
     public String setName() {
         return name;

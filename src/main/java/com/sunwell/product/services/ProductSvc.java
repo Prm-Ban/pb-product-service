@@ -35,10 +35,7 @@ import com.sunwell.product.repository.MetricRepo;
 import com.sunwell.product.repository.ProductImageRepo;
 import com.sunwell.product.repository.ProductSellPriceRepo;
 import com.sunwell.product.repository.SellPriceLevelRepo;
-import com.sunwell.product.utils.Filters;
-import com.sunwell.product.utils.GenericSpecification;
 import com.sunwell.product.utils.StandardConstant;
-
 
 @Service
 @Transactional
@@ -66,9 +63,6 @@ public class ProductSvc implements ProductService
 	
 	@Autowired
 	ProductImageRepo piRepo;
-	
-//	@Autowired
-//	ItemShipmentInfoRepo shipmentRepo;
 	
 	public ItemRepo getItemRepo() {
 		return itemRepo;
@@ -145,10 +139,6 @@ public class ProductSvc implements ProductService
 	public Page<Item> findAllItems(Pageable _page) {
 		return itemRepo.findAll(_page);
 	}
-	
-	public Page<Item> findItems(Filters _f, Pageable _page) throws Exception {
-		return itemRepo.findAll(new GenericSpecification<Item>(_f, Item.class), _page);
-	}
 		
 	public Page<Item> findByCategory(ItemCategory _ic, Pageable _page) {
 		return itemRepo.findByCategoriesIn(_ic, _page);
@@ -172,48 +162,6 @@ public class ProductSvc implements ProductService
         	addProductImage(_pi);
         
         return item;
-//		if(_i.getSellPrices() != null && _i.getSellPrices().size() > 0) {
-//			List<ProductSellPrice> listPSP = new LinkedList<>();
-//        	for(ProductSellPrice psp : _i.getSellPrices()) {
-//        		ProductSellPrice sellPrice = pspRepo.findOne(new ProductSellPricePK(psp.getProduct().getSystemId(), psp.getPriceLevel().getSystemId()));
-//        		if(sellPrice == null)
-//        			throw new OperationException(StandardConstant.ERROR_CANT_FIND_SELL_PRICE, null);
-//        	}
-//        	_i.setSellPrices(listPSP);
-//        }
-//		
-//		if(_i.getCategories() != null && _i.getCategories().size() > 0) {
-//			List<ItemCategory> listCategories = new LinkedList<>();
-//        	for(ItemCategory ic : _i.getCategories()) {
-//        		ItemCategory category = icRepo.findOne(ic.getSystemId());
-//        		if(category == null)
-//        			throw new OperationException(StandardConstant.ERROR_CANT_FIND_CATEGORY, null);
-//        	}
-//        	_i.setCategories(listCategories);
-//        }
-//		
-//		if(_i.getMerk() != null) {
-//			Merk merk = merkRepo.findOne(_i.getMerk().getSystemId());
-//			if(merk == null)
-//    			throw new OperationException(StandardConstant.ERROR_CANT_FIND_MERK, null);
-//		}
-//		
-//		if(_i.getMetric() != null) {
-//			Metrics metric = metricRepo.findOne(_i.getMetric().getName());
-//			if(metric == null)
-//    			throw new OperationException(StandardConstant.ERROR_CANT_FIND_METRIC, null);
-//		}
-		
-		// karena nested attribute maka harus dimanage
-		// dari luar mungkin udah diambil entity utuh tapi jangan berasumsi entity tersebut sudah dimanage
-		// kalau diambil di kontroler maka kontroler tersebut tidak berada dalam transaksi sehingga entitynya bukan managed entity
-		
-//		if(_i.getSellPrices() != null && _i.getSellPrices().size() > 0) {
-//        	for(ProductSellPrice psp : _i.getSellPrices()) {
-//        		System.out.println("Item: " + psp.getProduct().getName() + " sell price lv: " + psp.getPriceLevel().getSystemId());
-//        		psp.setPriceLevel(splRepo.findOne(psp.getPriceLevel().getSystemId()));
-//        	}
-//        }
     }
 	
 	public Item editItem(
@@ -236,9 +184,6 @@ public class ProductSvc implements ProductService
 		
 		if(item.getSellPrices() != null) {
 			pspRepo.deleteAll(item.getSellPrices());
-//			for(ProductSellPrice psp : item.getSellPrices()) {
-//				pspRepo.de
-//			}
 			item.setSellPrices(null);
 		}
 		
@@ -302,9 +247,6 @@ public class ProductSvc implements ProductService
 		return icRepo.findAll(_page);
 	}
 	
-	public Page<ItemCategory> findCategories(Filters _f, Pageable _page) throws Exception {
-		return icRepo.findAll(new GenericSpecification<ItemCategory>(_f, ItemCategory.class), _page);
-	}
 	
 	public List<ItemCategory> findAllCategories() {
 		return icRepo.findAll();
@@ -341,9 +283,6 @@ public class ProductSvc implements ProductService
 		return merkRepo.findByName(_name);
 	}
 	
-	public Page<Merk> findMerks(Filters _f, Pageable _page) throws Exception {
-		return merkRepo.findAll(new GenericSpecification<Merk>(_f, Merk.class), _page);
-	}
 	
 	public Page<Merk> findAllMerks(Pageable _page) {
 		return merkRepo.findAll(_page);
@@ -481,72 +420,5 @@ public class ProductSvc implements ProductService
     		throw new OperationException(StandardConstant.ERROR_CANT_FIND_PRODUCT, null);
     	
     	_pi.setProduct(item);
-    }
-		
-	
-//	public Item addItem(
-//    		@Valid @NotNull(message="{error_no_item}") Item _i, String _imgData, String _imgPath) 
-//    {        
-//        if(_imgData != null) {
-//	    		String uploadedFileLocation = _imgPath + "items/" + _i.getAlternativeToItem();
-//			File dir = new File(_imgPath + "items/");
-//			if(!dir.exists ()) {
-//			    dir.mkdir ();
-//			}
-//			
-//	      Util.writeToFile(Base64.getDecoder ().decode (
-//	        		_imgData), uploadedFileLocation);
-//        }
-//        
-//        return itemRepo.save(_i);
-//    }
-	
-//	public ItemShipmentInfo findShipment(Integer _id) {
-//		return shipmentRepo.findOne(_id);
-//	}		
-//	
-//	public ItemShipmentInfo findShipmentByName(String _name) {
-//		return shipmentRepo.findByName(_name);
-//	}
-//	
-//	public List<ItemShipmentInfo> findAllShipments() {
-//		return shipmentRepo.findAll();
-//	}
-//	
-//	public Page<ItemShipmentInfo> findAllShipments(Pageable _page) {
-//		return shipmentRepo.findAll(_page);
-//	}
-	
-//  public Item editItem(
-//	@Valid @NotNull(message="{error_no_item}") Item _i, String _imgData, String _imgPath) 
-//{
-//Item item = itemRepo.findOne(_i.getSystemId());
-//
-//if(item == null) 
-//	throw new sunwell.permaisuri.bus.exception.OperationException(StandardConstant.ERROR_CANT_FIND_PRODUCT, null);
-//				
-//if(_imgData != null) {
-//		String uploadedFileLocation = _imgPath + "items/"  + _i.getImage();
-//	File dir = new File(_imgPath + "products/");
-//	if(!dir.exists ()) {
-//	    dir.mkdir ();
-//	}
-//    Util.writeToFile(Base64.getDecoder ().decode (
-//    		_imgData), uploadedFileLocation);
-//}	
-//
-//if(item.getCategories() != null) {
-//	item.setCategories(null);
-//	itemRepo.flush();
-//}
-//
-//return itemRepo.save(_i);
-//}
-		
-	
-//	1. Imagenya bisa langsung dibuka dan diperiksa
-//	2. Memudahkan ketika AJAX request karena disimpan sebagai static resource, kita cuman perlu kasih url ke static resourcenya
-//	3. Tanpa AJAX data imagenya harus langsung disertakan beserta data lain
-//	3. Performa database menurun dengan besarnya data binari ( dari yang saya baca )
-	
+    }	
 }

@@ -9,9 +9,7 @@ package com.sunwell.product.model;
  * Created on March 12, 2007, 9:00 PM
  */
 
-import java.io.Serializable;
 
-import java.sql.*;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,17 +20,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-/**
- * @version 1.0 - March 12, 2007 ; initial version.
- * @version 1.2 - January 17, 2010 ; penambahan method returnAllFromDB(), dan
- *                  deprecated method returnAllRowFromDB().
- * @version 1.5 - July 22, 2010 ; penambahan atribut m_useByDefault yg berfungsi
- *                  sebagai flag utk mengetahui apakah suatu price level akan dijadikan
- *                  harga default untuk tampilan user.
- * @version 1.6 - Desember 08, 2014 ; diadaptasi dengan JPA
- * 
- * @author Irfin A.
- */
 @Entity
 @Table(name="sellpricelevel")
 public class SellPriceLevel 
@@ -126,7 +113,6 @@ public class SellPriceLevel
     @Override
     public int hashCode ()
     {
-//        return systemId != null ? systemId.hashCode () : 0;
     	return systemId;
     }
 
@@ -140,11 +126,6 @@ public class SellPriceLevel
         }
         
         SellPriceLevel other = (SellPriceLevel) obj;
-//        if ((this.systemId == null && other.systemId != null) || 
-//            (this.systemId != null && !this.systemId.equals(other.systemId))) {
-//            return false;
-//        }
-//        return true;
         return systemId == other.systemId;
     }
 

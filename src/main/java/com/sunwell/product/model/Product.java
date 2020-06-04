@@ -14,8 +14,6 @@ import java.io.Serializable;
 
 import java.sql.*;
 
-
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.*;
@@ -65,24 +63,6 @@ public class Product implements Serializable
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Calendar lastSync = Calendar.getInstance();
     
-//    @ManyToOne
-//    @JoinColumn(name="sys_creator")
-//    private UserCredential sysCreator;
-//    
-//    @ManyToOne
-//    @JoinColumn(name="sys_lastupdater")
-//    private UserCredential sysLastUpdater;
-//    
-//    @Column(name="sys_createdate")
-//    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-//    private Calendar sysCreateDate;
-//    
-//    
-//    @Column(name="sys_lastupdatedate")
-//    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-//    private Calendar sysLastUpdateDate;    
-      
-    
     /**
      * @roseuid 45F62F27031C
      */
@@ -122,37 +102,7 @@ public class Product implements Serializable
     {
         active = _status;
     }
-
-//    public String getDtype() {
-//        return dtype;
-//    }
-//
-//    public void setDtype(String _dtype) {
-//        this.dtype = _dtype;
-//    }
-//    
-//    public List<ProductPurchasePrice> getPurchasePrices () 
-//    { 
-//        return listPurchasePrice; 
-//    }
-//    
-//    public void setPurchasePrices (List<ProductPurchasePrice> _prices)
-//    {
-//        listPurchasePrice = _prices;
-//        
-//    }
-    
-//    public List<ProductDiscounts> getDiscounts () 
-//    { 
-//       
-//        return listDiscount;
-//    }
-//    
-//    public void setDiscounts (List<ProductDiscounts> _discounts)
-//    {
-//        listDiscount = _discounts;
-//    }
-    
+ 
     public List<ProductSellPrice> getSellPrices () 
     { 
         
@@ -184,33 +134,6 @@ public class Product implements Serializable
         return null;
     }
     
-//    public UserCredential getSysCreator () { return sysCreator; }
-//    
-//    public void setSysCreator (UserCredential _creator)
-//    {
-//        this.sysCreator = _creator;
-//    }
-//    
-//    public UserCredential getSysLastUpdater () { return sysLastUpdater; }
-//    
-//    public void setSysLastUpdater (UserCredential _updater)
-//    {
-//        this.sysLastUpdater = _updater;
-//    }
-//    
-//    public Calendar getSysCreateDate () { return sysCreateDate; }
-//    
-//    public void setSysCreateDate (Calendar _date)
-//    {
-//        this.sysCreateDate = _date;
-//    }
-//    
-//    public Calendar getSysLastUpdateDate () { return sysLastUpdateDate; }
-//    
-//    public void setSysLastUpdateDate (Calendar _date)
-//    {
-//        this.sysLastUpdateDate = _date;
-//    }
     
     public int hashCode() {
         System.out.println(" Product hashCode(); called");
@@ -240,6 +163,5 @@ public class Product implements Serializable
 	{
 		lastSync = _lastSync;
 	}    
-
    
 }

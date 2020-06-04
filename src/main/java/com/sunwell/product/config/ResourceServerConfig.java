@@ -64,20 +64,20 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 //        return defaultTokenServices;
 //    }
     
-    @Configuration
-    @EnableGlobalMethodSecurity(prePostEnabled = true)
-    public static class GlobalMethodSecurityServer extends GlobalMethodSecurityConfiguration {
-    	
-    	@Override
-    	protected MethodSecurityExpressionHandler createExpressionHandler() {
-    		return new OAuth2MethodSecurityExpressionHandler();
-    	}
-    	
+//    @Configuration
+//    @EnableGlobalMethodSecurity(prePostEnabled = true)
+//    public static class GlobalMethodSecurityServer extends GlobalMethodSecurityConfiguration {
+//    	
 //    	@Override
-//    	protected AccessDecisionManager accessDecisionManager() {
-//    		super.accessDecisionManager().
+//    	protected MethodSecurityExpressionHandler createExpressionHandler() {
+//    		return new OAuth2MethodSecurityExpressionHandler();
 //    	}
-    }
+//    	
+////    	@Override
+////    	protected AccessDecisionManager accessDecisionManager() {
+////    		super.accessDecisionManager().
+////    	}
+//    }
 
  
 }

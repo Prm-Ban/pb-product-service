@@ -2,14 +2,6 @@ package com.sunwell.product.utils;
 
 public class StandardConstant {
 	public static final int NO_ERROR = 0;
-//	public static final int ERROR_INTERNAL_SERVER = 1;
-//    public static final int ERROR_NO_LOGIN_SESSION = 2;
-//    public static final int ERROR_NOT_ACTIVE = 3;
-//	public static final int ERROR_BAD_REQUEST = 4;
-//	public static final int TOKEN_VALID = 5;
-//	public static final int ERROR_TOKEN_INVALID = ;
-//	public static final int ERROR_TOKEN_EXPIRED = 29;
-//    public static final int ERROR_CANT_FIND_TENANT = 0;
     public static final int ERROR_CANT_FIND_USER = 1;
     public static final int ERROR_CANT_FIND_CATEGORY = 2;
     public static final int ERROR_CANT_FIND_CUSTOMER = 3;
@@ -49,7 +41,5 @@ public class StandardConstant {
     public static final int ERROR_NO_COMPANY_EMAIL_IS_SPECIFIED = 213;
     public static final int ERROR_NO_ITEM_IN_THE_CART = 214;
     public static final int ERROR_USER_IS_NOT_ENABLED = 215;
-    //    public static final int ERROR_NO_TENANT = 25;
-//    public static final int ERROR_CANT_FIND_SPECIFIED_OBJECT = 26;
    
 }

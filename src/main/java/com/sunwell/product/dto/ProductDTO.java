@@ -31,13 +31,10 @@ public class ProductDTO extends StandardDTO
 {
     private Integer systemId;
     private String name;
-//    private String brandOwner;
     private String memo;
     private Boolean active = true;
     private String imageData ;
-//    private List<ProductPurchasePriceDTO> purchasePrices ;
     private List<ProductSellPriceDTO> sellPrices ;
-//    private List<ProductDiscountsDTO> discounts ;    
     
     private Product product;
 

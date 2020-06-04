@@ -9,12 +9,6 @@ package com.sunwell.product.model;
  * Created on February 8, 2007, 4:49 PM
  */
 
-import java.sql.PreparedStatement;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,19 +22,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-/**
- * Menyimpan berbagai jenis Merk utk item barang yg dijual. Misalnya Shell (merk
- * utk oli), Bridgestone, Dunlop, GT, Goodyear, etc.
- *
- * @author Irfin A
- *
- * @version 1.0 - February 8, 2007 ; initial version.
- * @version 1.3 - January 13, 2010 ; penambahan method returnAllFromDB().
- * @version 1.4 - June 16, 2014 ; penambahan atribut utk BrandOwner.
- * @version 1.5 - December 15, 2014 ; adaptasi dengan fitur jpa.
- * @version 1.6 - February 14, 2015 ; tambahan method toString(), equals(), dan menyediakan
- *                  beberapa namedQuery. Implement Comparable
- */
 @Entity
 @Table(name="merk")
 //@NamedQueries ({
@@ -134,11 +115,6 @@ public class Merk implements Comparable<Merk>
         return name;
     }
 
-//    @Override
-//    public int hashCode() {
-//    	return systemId != null ? systemId.hashCode() : 0;
-//    }
-
     @Override
     public boolean equals (Object _obj)
     {
@@ -149,11 +125,6 @@ public class Merk implements Comparable<Merk>
         }
         
         Merk other = (Merk) _obj;
-//        if ((this.systemId == null && other.systemId != null) || 
-//            (this.systemId != null && !this.systemId.equals(other.systemId))) {
-//            return false;
-//        }
-//        return true;
         return systemId == other.systemId;
     }
 

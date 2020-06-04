@@ -48,8 +48,6 @@ public class ProductSellPricePK implements Serializable
     public int hashCode ()
     {
     	int hash = 0;
-//        hash += product != null ? product.hashCode() : 0;
-//        hash += priceLevel != null ? priceLevel.hashCode () : 0;
     	hash += product;
     	hash += priceLevel;
         return hash;
@@ -63,25 +61,6 @@ public class ProductSellPricePK implements Serializable
             return false;
         }
         ProductSellPricePK other = (ProductSellPricePK) object;
-//        if (!(product == null && other.product == null) || (product == null && other.product != null) || !this.product.equals(other.product))
-//            return false;
-//        if (!(priceLevel == null && other.priceLevel == null) || (priceLevel == null && other.priceLevel != null) || !this.priceLevel.equals(other.priceLevel))
-//            return false;
-        
-//        if(product != null)
-//        	if(!product.equals(other.product))
-//        		return false;
-//        else 
-//	    	if(other.product != null)
-//	    		return false;
-//        
-//        
-//        if(priceLevel != null)
-//        	if(!priceLevel.equals(other.priceLevel))
-//        		return false;
-//        else
-//        	if(other.priceLevel != null)
-//        		return false;
         
         if(product != other.product)
         	return false;

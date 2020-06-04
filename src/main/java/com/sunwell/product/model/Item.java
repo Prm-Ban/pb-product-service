@@ -96,13 +96,6 @@ public class Item extends Product
     }
     
     
-//    public ItemShipmentInfo getShipmentInfo()   { return shipmentInfo ; }
-//    
-//    public void setShipmentInfo ( ItemShipmentInfo _shipmentInfo )
-//    {
-//        this.shipmentInfo = _shipmentInfo ;
-//    }
-    
     public Merk getMerk () { return merk; }
     
     public void setMerk (Merk _merk)

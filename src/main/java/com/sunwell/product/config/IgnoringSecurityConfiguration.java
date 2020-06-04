@@ -1,4 +1,4 @@
-//package com.sunwell.sales.config;
+//package com.sunwell.product.config;
 //
 //import java.security.MessageDigest;
 //

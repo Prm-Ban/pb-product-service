@@ -106,34 +106,6 @@ public class ItemDTO extends ProductDTO
     	return item;
     }
     
-
-//    public Item (int _id)
-//    {
-//        super (_id);
-//        super.setDtype("Item");
-//        categories = null;
-//        shipmentInfo = null ;
-//        merk = null;
-//        imageBytes = null;
-//
-//        metricInv = null;
-//        metricPO = null;
-//        metricSales = null;
-//
-//        sku = "";
-//        memo = "";
-//        setMemo ("");
-//
-//        lbp = 0.0;
-//        lbpAutoUpdate = false;
-//        Calendar cal = Calendar.getInstance ();
-//        cal.set (1980, 9, 9);
-//        lbpDate = cal;
-//
-//        alternativeTo = null;
-//        minStock = 0.0f;
-//    }
-    
     public String getCode () { return code; }
     
     public void setCode (String _code) 

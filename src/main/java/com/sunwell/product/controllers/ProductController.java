@@ -59,9 +59,7 @@ import com.sunwell.product.model.Item;
 import com.sunwell.product.model.ItemCategory;
 import com.sunwell.product.model.Merk;
 import com.sunwell.product.services.ProductService;
-import com.sunwell.product.utils.Filters;
 import com.sunwell.product.utils.ServiceUtil;
-import com.sunwell.product.utils.ServiceUtil.TokenInfo;
 
 /**
  *
@@ -84,9 +82,6 @@ public class ProductController
     
     @Autowired
     HttpServletRequest request;  
-    
-    @Autowired
-    TestBean testBean;
     
     
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
@@ -151,44 +146,6 @@ public class ProductController
         return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "resources/categories", method = RequestMethod.GET,
-			produces = "application/json", params="criteria"
-	)
-    public ResponseEntity<Map<String,Object>> getCategories(
-    		@RequestHeader(value="Authorization", required = false) String _auth,
-    		@RequestParam(value="criteria") List<String> _filters,
-    		Pageable _page
-    		) throws Exception 
-    {
-		Map<String,Object> retData = null;
-	
-		try {
-			
-			Object mainData = null;
-    		Page<ItemCategory> pageCategories = null ;
-			int totalPages = 0;
-			long totalItems = 0;
-			Filters filters =  svcUtil.convertToFilters(_filters, ItemCategory.class);			
-			pageCategories = productService.findCategories(filters, _page);
-			if(pageCategories != null && pageCategories.getNumberOfElements() > 0) {
-            	totalPages = pageCategories.getTotalPages();
-            	totalItems = pageCategories.getTotalElements();
-            	List<ItemCategory> categories = pageCategories.getContent();
-            	List<ItemCategoryDTO> listCategoryDTO = new LinkedList<>();
-            	for(ItemCategory i : categories) {
-            		listCategoryDTO.add(new ItemCategoryDTO(i));
-            	}
-            	mainData = listCategoryDTO;
-        	}
-            
-            retData = svcUtil.returnSuccessfulData(mainData, totalPages, totalItems);
-		}
-		catch(Exception e) {
-			retData = svcUtil.handleException(e);
-		}
-		
-        return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
-    }
     
     @RequestMapping(value = "resources/categories", method = RequestMethod.POST,
 			consumes = "application/json", produces = "application/json"
@@ -306,43 +263,6 @@ public class ProductController
         return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "resources/merks", method = RequestMethod.GET,
-			produces = "application/json", params="criteria"
-	)
-    public ResponseEntity<Map<String,Object>> getMerks(
-    		@RequestHeader(value="Authorization", required = false) String _auth,
-    		@RequestParam(value="criteria") List<String> _filters,
-    		Pageable _page
-    		) throws Exception 
-    {
-		Map<String,Object> retData = null;
-	
-		try {
-			Object mainData = null;
-    		Page<Merk> pageMerks = null ;
-			int totalPages = 0;
-			long totalItems = 0;
-			Filters filters =  svcUtil.convertToFilters(_filters, Merk.class);			
-			pageMerks = productService.findMerks(filters, _page);
-			if(pageMerks != null && pageMerks.getNumberOfElements() > 0) {
-            	totalPages = pageMerks.getTotalPages();
-            	totalItems = pageMerks.getTotalElements();
-            	List<Merk> merks = pageMerks.getContent();
-            	List<MerkDTO> listMerkDTO = new LinkedList<>();
-            	for(Merk m : merks) {
-            		listMerkDTO.add(new MerkDTO(m));
-            	}
-            	mainData = listMerkDTO;
-        	}
-            
-            retData = svcUtil.returnSuccessfulData(mainData, totalPages, totalItems);
-		}
-		catch(Exception e) {
-			retData = svcUtil.handleException(e);
-		}
-		
-        return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
-    }
     
     @RequestMapping(value = "resources/merks", method = RequestMethod.POST,
 			consumes = "application/json", produces = "application/json"
@@ -399,18 +319,6 @@ public class ProductController
         return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "resources/test", method = RequestMethod.GET,
-			produces = "application/json"
-	)
-    public void test(
-    		@RequestHeader(value="Authorization", required = false) String _auth,
-			@RequestParam(value="systemId", required = false) Integer _systemId,
-			@RequestParam(value="name", required = false) String _name,
-			@RequestParam(value="categoryId", required = false) Integer _categoryId,
-			Pageable _page ) throws Exception {
-    	testBean.testMethod();
-//    	return null;
-    }
     
     @RequestMapping(value = "resources/items", method = RequestMethod.GET,
 			produces = "application/json"
@@ -424,7 +332,6 @@ public class ProductController
 			Pageable _page ) throws Exception 
     {
 		Map<String,Object> retData = null;
-		testBean.testMethod();
         try {
         	
 			Object mainData = null;
@@ -466,44 +373,6 @@ public class ProductController
         catch(Exception e) {
 			retData = svcUtil.handleException(e);
 		}
-        return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
-    }
-    
-    @RequestMapping(value = "resources/items", method = RequestMethod.GET,
-			produces = "application/json", params="criteria"
-	)
-    public ResponseEntity<Map<String,Object>> getItems(
-    		@RequestHeader(value="Authorization", required = false) String _auth,
-    		@RequestParam(value="criteria") List<String> _filters,
-    		Pageable _page
-    		) throws Exception 
-    {
-		Map<String,Object> retData = null;
-	
-		try {
-			Object mainData = null;
-    		Page<Item> pageItems = null ;
-			int totalPages = 0;
-			long totalItems = 0;
-			Filters filters =  svcUtil.convertToFilters(_filters, Item.class);			
-			pageItems = productService.findItems(filters, _page);
-			if(pageItems != null && pageItems.getNumberOfElements() > 0) {
-            	totalPages = pageItems.getTotalPages();
-            	totalItems = pageItems.getTotalElements();
-            	List<Item> items = pageItems.getContent();
-            	List<ItemDTO> listItemDTO = new LinkedList<>();
-            	for(Item i : items) {
-            		listItemDTO.add(new ItemDTO(i));
-            	}
-            	mainData = listItemDTO;
-        	}
-            
-            retData = svcUtil.returnSuccessfulData(mainData, totalPages, totalItems);
-		}
-		catch(Exception e) {
-			retData = svcUtil.handleException(e);
-		}
-		
         return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
     }
     
@@ -562,215 +431,6 @@ public class ProductController
 		}
         return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
     }
-    
-//    @RequestMapping(value = "resources/stocks", method = RequestMethod.GET,
-//			produces = "application/json"
-//	)
-//    public ResponseEntity<Map<String,Object>> getStocks(
-//    		@RequestHeader(value="Authorization", required = false) String _auth,
-//    		@RequestParam(value="itemId", required = false) Integer _itemId,
-//    		@RequestParam(value="warehouseId", required = false) Integer _warehouseId,
-//    		Pageable _page
-//    		) throws Exception 
-//    {
-//		Map<String,Object> retData = null;
-//		
-//		try {
-//			TokenInfo ti = svcUtil.authenticate(_auth, UserCredential.TASK_VIEW_STOCKS, -1);
-//    		retData = svcUtil.getErrorFromToken(ti, true);
-//    		if(retData != null)
-//    			return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
-//    		
-//			Object mainData = null;
-//			OnHandStock oh = null;
-//    		Page<OnHandStock> pageOhs = null ;
-//    		int totalPages = 0;
-//			long totalItems = 0;
-//			
-//			if(_itemId != null)
-//        		pageOhs = invSvc.findOnHandByItemId(_itemId, _page);
-//        	else if (_warehouseId != null)
-//        		pageOhs = invSvc.findOnHandByWarehouseId(_warehouseId, _page);
-//        	else
-//        		pageOhs = invSvc.findAllOnHandStock(_page);
-//            
-//            if(pageOhs != null && pageOhs.getNumberOfElements() > 0) {
-//    			List<OnHandStock> stocks = pageOhs.getContent();
-//    			List<OnHandStockDTO> stocksData = new LinkedList<>();
-//    			for(OnHandStock ohs : stocks) {
-//    				stocksData.add(new OnHandStockDTO(ohs));
-//    			}
-//    			mainData = stocksData;
-//    			totalPages = pageOhs.getTotalPages();
-//    			totalItems = pageOhs.getTotalElements();
-//    		}
-//    		else if (oh != null) {
-//    			mainData = new OnHandStockDTO(oh);
-//    			totalPages = 1;
-//    			totalItems = 1;
-//    		}
-//            
-//            retData = svcUtil.returnSuccessfulData(mainData, totalPages, totalItems);
-//		}
-//		catch(Exception e) {
-//			retData = svcUtil.handleException(e);
-//		}
-//        return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
-//    }
-//    
-//    @RequestMapping(value = "resources/stocks", method = RequestMethod.GET,
-//			produces = "application/json", params="criteria"
-//	)
-//    public ResponseEntity<Map<String,Object>> getStocks(
-//    		@RequestHeader(value="Authorization", required = false) String _auth,
-//    		@RequestParam(value="criteria") List<String> _filters,
-//    		Pageable _page
-//    		) throws Exception 
-//    {
-//		Map<String,Object> retData = null;
-//	
-//		try {
-//			TokenInfo ti = svcUtil.authenticate(_auth, UserCredential.TASK_VIEW_STOCKS, -1);
-//			retData = svcUtil.getErrorFromToken(ti, true);
-//    		if(retData != null)
-//    			return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
-//    		
-//			Object mainData = null;
-//    		Page<OnHandStock> pageStocks = null ;
-//			int totalPages = 0;
-//			long totalItems = 0;
-//			Filters filters =  svcUtil.convertToFilters(_filters, OnHandStock.class);			
-//			pageStocks = invSvc.findOnHandStocks(filters, _page);
-//			if(pageStocks != null && pageStocks.getNumberOfElements() > 0) {
-//            	totalPages = pageStocks.getTotalPages();
-//            	totalItems = pageStocks.getTotalElements();
-//            	List<OnHandStock> stocks = pageStocks.getContent();            	
-//            	List<OnHandStockDTO> listOnHandDTO = new LinkedList<>();
-//            	for(OnHandStock oh : stocks) {
-//            		listOnHandDTO.add(new OnHandStockDTO(oh));
-//            	}
-//            	mainData = listOnHandDTO;
-//        	}
-//            
-//            retData = svcUtil.returnSuccessfulData(mainData, totalPages, totalItems);
-//		}
-//		catch(Exception e) {
-//			retData = svcUtil.handleException(e);
-//		}
-//		
-//        return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
-//    }
-//        
-//    @RequestMapping(value = "resources/stocks", method = RequestMethod.POST,
-//			consumes = "application/json", produces = "application/json"
-//	)
-//    public ResponseEntity<Map<String,Object>> addStock(
-//    		@RequestHeader(value="Authorization", required = false) String _auth,
-//    		@RequestBody OnHandStockDTO _dto) throws Exception 
-//    {
-//		Map<String,Object> retData = null;
-//		try {
-//			TokenInfo ti = svcUtil.authenticate(_auth, UserCredential.TASK_CREATE_STOCKS, -1);
-//    		retData = svcUtil.getErrorFromToken(ti, true);
-//    		if(retData != null)
-//    			return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
-//			OnHandStock data = _dto.getData();
-//			data = invSvc.addOnHand(data);
-//			retData = svcUtil.returnSuccessfulData(new OnHandStockDTO(data), 1, 1);
-//		}
-//		catch(Exception e) {
-//			retData = svcUtil.handleException(e);
-//		}
-//        return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.CREATED);
-//    }
-//    
-//    @RequestMapping(value = "resources/stocks", method = RequestMethod.PUT,
-//			consumes = "application/json", produces = "application/json"
-//	)
-//    public ResponseEntity<Map<String,Object>> editStock(
-//    		@RequestHeader(value="Authorization", required = false) String _auth,
-//    		@RequestBody OnHandStockDTO _dto) throws Exception 
-//    {
-//		Map<String,Object> retData = null;
-//		try {
-//			TokenInfo ti = svcUtil.authenticate(_auth, UserCredential.TASK_UPDATE_STOCKS, -1);
-//    		retData = svcUtil.getErrorFromToken(ti, true);
-//    		if(retData != null)
-//    			return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
-//			OnHandStock data = _dto.getData();
-//			System.out.println("WR: " + data.getWarehouse().getName() + " id: " + data.getWarehouse().getSystemId());
-//			data = invSvc.editOnHand(data);
-//			retData = svcUtil.returnSuccessfulData(new OnHandStockDTO(data), 1, 1);
-//		}
-//		catch(Exception e) {
-//			retData = svcUtil.handleException(e);
-//		}
-//        return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.CREATED);
-//    }
-//    @RequestMapping(value = "resources/stocks", method = RequestMethod.DELETE,
-//			produces = "application/json"
-//	)
-//    public ResponseEntity<Map<String,Object>> deleteStock(
-//    		@RequestHeader(value="Authorization", required = false) String _auth,
-//    		@RequestParam("itemId") Integer _itemId,
-//    		@RequestParam("warehouseId") Integer _warehouseId) throws Exception 
-//    {
-//		Map<String,Object> retData = null;
-//		try {
-//			TokenInfo ti = svcUtil.authenticate(_auth, UserCredential.TASK_DELETE_STOCKS, -1);
-//    		retData = svcUtil.getErrorFromToken(ti, true);
-//    		if(retData != null)
-//    			return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.UNAUTHORIZED);
-//			OnHandStock oh = invSvc.deleteOnHand(new OnHandStock(new Item(_itemId), new Gudang(_warehouseId), -1));
-//			retData = svcUtil.returnSuccessfulData(new OnHandStockDTO(oh), 1, 1);
-//		}
-//		catch(Exception e) {
-//			retData = svcUtil.handleException(e);
-//		}
-//        return new ResponseEntity<Map<String,Object>>(retData, null, HttpStatus.OK);
-//    }
-//    
-//    @RequestMapping(value = "products/images", method = RequestMethod.GET
-//			,produces = {"image/png", "image/jpg"}
-//	)
-//    public ResponseEntity<byte[]> getImage(
-//    		@RequestHeader(value="Authorization", required = false) String _auth,
-//    		@RequestParam("product") String _product) throws Exception
-//    {
-//		TokenInfo ti = svcUtil.authenticate(_auth, UserCredential.TASK_VIEW_PRODUCT_IMAGE, -1);
-//		if(ti.access != ServiceUtil.ACCESS_ALLOW) {
-//			return new ResponseEntity<byte[]>(null, null, HttpStatus.UNAUTHORIZED);
-//		}
-//		else {
-//			ProductImage pi = productService.findProductImageByProductName(_product);
-//			byte[] imageData = pi != null ? pi.getImageData() : null;
-//			return new ResponseEntity<byte[]>(imageData, null, HttpStatus.OK);
-//		}
-//    }
-
-//    @RequestMapping(value = "products/images", method = RequestMethod.GET
-////			,produces = {"image/png", "image/jpg"}
-//	)
-//    public ResponseEntity<byte[]> getImage(@RequestParam("sessionString")String _sessionString,
-//    		@RequestParam("image") String _image) throws Exception
-//    {
-//        System.out.println("getImages called");
-//        String path = sCtx.getInitParameter ("imagePath") + "products/"  +  _image;
-//        System.out.println ("PATH: " + path);
-//        File file = new File(path);
-//        if(file.exists ()) { 
-//            FileInputStream fis = new FileInputStream(file);
-//            long length = file.length ();
-//            byte[] filecontent = new byte[(int)length];
-//            fis.read(filecontent,0,(int)length); 
-//            return new ResponseEntity<byte[]>(filecontent, null, HttpStatus.OK);
-//        	
-//        }
-//        else {
-//            System.out.println ("File doesn't exist, image: " + _image);
-//            return null;
-//        }
-//    }
 }
 
 
